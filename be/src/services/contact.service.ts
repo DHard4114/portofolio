@@ -11,10 +11,12 @@
  * @created 2025
  */
 
+
 import { ContactRepository } from '../repositories/contact.repository'
 import { Contact, CreateContactDTO } from '../types'
 import { AppError, HttpStatus } from '../utils/errors'
 import { createLogger } from '../utils/logger'
+import { sendContactNotification } from '../utils/email'
 
 const logger = createLogger('ContactService')
 
@@ -39,7 +41,14 @@ export class ContactService {
       }
 
       logger.info('Creating new contact', { email: sanitizedData.email })
-      return await this.contactRepository.create(sanitizedData)
+      const contact = await this.contactRepository.create(sanitizedData)
+
+      // Send notification email (async, but don't block response)
+      sendContactNotification(sanitizedData).catch((err) => {
+        logger.error('Failed to send contact notification email', err)
+      })
+
+      return contact
     } catch (error) {
       logger.error('Failed to create contact', error)
       throw error
