@@ -13,6 +13,7 @@
 
 
 import express from 'express'
+import cors from 'cors'
 import routes from './routes'
 import { errorHandler, notFoundHandler } from './middlewares/error.middleware'
 import config from './config'
@@ -25,7 +26,12 @@ const app = express()
 const PORT = config.port
 
 // Middleware
-// (Jika ingin pakai helmet/cors/morgan, import dan aktifkan lagi di sini)
+app.use(
+  cors({
+    origin: config.corsOrigin,
+    credentials: true
+  })
+)
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
