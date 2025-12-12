@@ -13,13 +13,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 
 const experiences = [
-  // {
-  //   company: "Netlab UI",
-  //   role: "Research Assistant",
-  //   period: "Nov 2025 - Present",
-  //   current: true,
-  //   description: "Conducting research on advanced networking protocols and AI-driven digital systems within the Dept. of Electrical Engineering UI.",
-  // },
+
   {
     company: "Ikatan Mahasiswa Elektro (IME FTUI)",
     role: "Secretary Expert Staff",

@@ -13,30 +13,16 @@ import Image from "next/image"
 
 // Data disesuaikan dengan profil Daffa (Achievement & Updates)
 const feeds = [
-  {
-    title: "Quarterfinalist at OKTAN ITB",
-    date: "Oct 2022",
-    category: "Competition",
-    image: null, // Ganti dengan path gambar jika ada, misal "/oktan.jpg"
-    description: "Achieved Quarterfinalist position among 2,000 participants in the National Chemistry Olympiad organized by Institut Teknologi Bandung.",
-    link: "#"
-  },
+
   {
     title: "1st Place Solo Guitar Competition",
     date: "May 2023",
     category: "Art & Music",
-    image: null, 
+    image: "/GitarSolo.jpg",
     description: "Secured 1st Place at the District level and 3rd Place at the Provincial level, demonstrating disciplined practice and artistic expression.",
-    link: "#"
+    link: "https://drive.google.com/file/d/1AIaicZ3YU5elLOHoMXtU2TB0sozERE7V/view?usp=sharing"
   },
-  // {
-  //   title: "Netlab Research Assistant",
-  //   date: "Nov 2025",
-  //   category: "Career",
-  //   image: null, 
-  //   description: "Officially joined Netlab UI to research Advanced Computer Networking and AI implementation in digital systems.",
-  //   link: "#"
-  // }
+
 ]
 
 export default function FeedSection() {

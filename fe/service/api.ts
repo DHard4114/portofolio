@@ -7,60 +7,12 @@
  * Includes strict typing, error handling, and environment configuration.
  */
 
+import { ApiResponse, Contact, ContactCount, CreateContactDTO, SystemHealth, AnalyticsSummary, DeletedCount } from '../types/api'
+
 // 1. Config: Gunakan Environment Variable untuk fleksibilitas deploy
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
 
-// || 'http://localhost:5000/api'
 
-// 2. Standard Response Wrapper (Sesuai dengan backend utils/response.ts)
-export interface ApiResponse<T> {
-  success: boolean
-  message?: string
-  data?: T
-  error?: string
-}
-
-// --- TYPES (Sesuai dengan Backend DTO) ---
-
-export interface Contact {
-  id: string
-  name: string
-  email: string
-  subject: string
-  message: string
-  createdAt: string // JSON mengembalikan Date sebagai string
-}
-
-export interface CreateContactDTO {
-  name: string
-  email: string
-  subject: string
-  message: string
-}
-
-export interface ContactCount {
-  count: number
-}
-
-export interface AnalyticsSummary {
-  totalVisitors: number
-  totalPageViews: number
-  uniqueVisitors: number
-  topPages: Array<{
-    page: string
-    count: number // Di backend namanya 'count', bukan 'views'
-  }>
-}
-
-export interface SystemHealth {
-  uptime: number // dalam detik
-  message: string
-  timestamp: string
-}
-
-export interface DeletedCount {
-  deletedCount: number
-}
 
 // --- HELPER FUNCTION ---
 

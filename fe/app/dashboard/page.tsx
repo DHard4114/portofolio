@@ -12,7 +12,8 @@
 
 "use client"
 import { useEffect, useState, useCallback } from 'react'
-import { getAnalyticsSummary, AnalyticsSummary, getSystemHealth, ApiResponse, SystemHealth } from '../../service/api'
+import { getAnalyticsSummary, getSystemHealth } from '../../service/api'
+import { AnalyticsSummary, ApiResponse, SystemHealth } from '../../types/api'
 import NavBar from '../../components/NavBar'
 
 // --- TYPE DEFINITION FIX ---

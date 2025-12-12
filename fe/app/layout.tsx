@@ -37,7 +37,7 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: "Daffa Hardhan | Portfolio",
-  description: "High-performance digital systems and embedded solutions.",
+  description: "Portfolio of Daffa Hardhan – engineering, technology, and creative solutions across software, hardware, and innovation.",
 };
 
 export default function RootLayout({
