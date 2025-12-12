@@ -1,252 +1,82 @@
-# Portfolio Website - Modular Architecture
+# Daffa Hardhan | Portfolio
 
-Portfolio website dengan arsitektur yang terpisah antara Frontend dan Backend.
+![image](https://hackmd.io/_uploads/BJbH_tYG-g.png)
 
-## Struktur Project
+> **"Forging robust digital architectures at the intersection of Hardware and Software."**
 
-```
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)](https://expressjs.com/)
+[![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)](https://www.prisma.io/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+
+## Overview
+
+This project serves as my digital headquarters and engineering playground. It goes beyond a standard static portfolio by implementing a **live, full-stack ecosystem**.
+
+The system features a decoupled architecture (Frontend & Backend) to demonstrate scalable software design, complete with a custom-built **Real-time Analytics Command Center** that monitors traffic and server health without relying on third-party black-box solutions.
+
+### Key Engineering Features
+
+#### 1. Technical Luxury Design System (Frontend)
+*   **Aesthetic:** A "Cyberpunk/High-Tech" visual identity utilizing *Space Grotesk*, *Cormorant Garamond*, and *JetBrains Mono*.
+*   **Immersion:** Interactive aurora backgrounds, holographic avatar effects, and micro-interactions powered by **Framer Motion**.
+*   **Performance:** Fully optimized Next.js 14 App Router with server-side rendering for critical content.
+
+#### 2. Analytics Command Center (Dashboard)
+A protected route (`/dashboard`) serving as a live monitoring console:
+*   **Live Server Heartbeat:** Real-time server uptime ticker synced with the Node.js backend process.
+*   **Custom Visualization:** Network traffic simulation rendered via raw SVG math (no heavy chart libraries).
+*   **Privacy-First:** Visitor IPs are masked and logs are sanitized before display.
+
+#### 3. Robust Backend Architecture
+*   **Clean Architecture:** Strict separation of concerns into Controllers, Services, and Repositories.
+*   **Security:** Hardened with Helmet, CORS policies, and Rate Limiting (DDOS protection).
+*   **Documentation:** Auto-generated interactive API documentation via **Scalar** (OpenAPI 3.0).
+
+---
+
+## Tech Stack & Tools
+
+### Frontend (`/fe`)
+| Tech | Role |
+| :--- | :--- |
+| **Next.js 14** | Core Framework (App Router) |
+| **TypeScript** | Strict Type Safety |
+| **Tailwind CSS v4** | Styling Engine |
+| **Framer Motion** | Animation Orchestration |
+| **Lucide React** | Iconography |
+
+### Backend (`/be`)
+| Tech | Role |
+| :--- | :--- |
+| **Express.js** | Serverless-ready REST API |
+| **Prisma ORM** | Database Access Layer |
+| **PostgreSQL** | Relational Database (Cloud Hosted) |
+| **Winston** | Structured Logging |
+| **Scalar** | API Documentation UI |
+
+---
+
+## System Architecture
+
+The project follows a monorepo-style structure to ensure separation of concerns while sharing type definitions conceptually.
+
+```bash
 portofolio/
-├── fe/                          # Frontend (Next.js)
+├── fe/                          # Frontend Application (Client)
 │   ├── src/
-│   │   ├── app/                # Next.js App Router
-│   │   │   ├── globals.css
-│   │   │   ├── layout.tsx
-│   │   │   └── page.tsx
-│   │   ├── components/
-│   │   │   ├── layout/         # Layout components
-│   │   │   │   ├── Navigation.tsx
-│   │   │   │   └── Footer.tsx
-│   │   │   ├── sections/       # Page sections
-│   │   │   │   ├── Hero.tsx
-│   │   │   │   ├── About.tsx
-│   │   │   │   ├── Education.tsx
-│   │   │   │   ├── Experience.tsx
-│   │   │   │   ├── Skills.tsx
-│   │   │   │   ├── Projects.tsx
-│   │   │   │   └── Contact.tsx
-│   │   │   └── providers/      # Context providers
-│   │   │       └── ThemeProvider.tsx
-│   │   ├── services/           # API services
-│   │   │   ├── api.service.ts
-│   │   │   └── contact.service.ts
-│   │   └── types/              # TypeScript types
-│   │       └── index.ts
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── tailwind.config.ts
-│   └── next.config.js
+│   │   ├── app/                # App Router (Home, Dashboard)
+│   │   ├── components/         # Reusable UI (Hero, Charts, Terminals)
+│   │   ├── services/           # Type-safe API Client Wrappers
+│   │   └── types/              # DTOs & Interfaces
 │
-└── be/                          # Backend (Express)
+└── be/                          # Backend API Service (Server)
     ├── src/
-    │   ├── controllers/        # Request handlers
-    │   │   ├── contact.controller.ts
-    │   │   └── analytics.controller.ts
-    │   ├── services/           # Business logic
-    │   │   ├── contact.service.ts
-    │   │   └── analytics.service.ts
-    │   ├── repositories/       # Database operations
-    │   │   ├── contact.repository.ts
-    │   │   └── visitor.repository.ts
-    │   ├── routes/             # API routes
-    │   │   ├── index.ts
-    │   │   ├── contact.routes.ts
-    │   │   └── analytics.routes.ts
-    │   ├── middlewares/        # Express middlewares
-    │   │   ├── error.middleware.ts
-    │   │   ├── validation.middleware.ts
-    │   │   └── rateLimit.middleware.ts
-    │   ├── types/              # TypeScript types
-    │   │   └── index.ts
-    │   ├── lib/                # Utilities
-    │   │   └── prisma.ts
-    │   └── server.ts           # Server entry point
-    ├── prisma/
-    │   └── schema.prisma
-    ├── package.json
-    └── tsconfig.json
-```
-
-## Tech Stack
-
-### Frontend
-- **Framework**: Next.js 14 dengan App Router
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Theme**: next-themes (dark/light mode)
-- **Animations**: react-intersection-observer
-
-### Backend
-- **Framework**: Express.js
-- **Language**: TypeScript
-- **Database**: PostgreSQL
-- **ORM**: Prisma
-- **Security**: Helmet, CORS, Rate Limiting
-
-## Arsitektur Backend
-
-Backend menggunakan **Clean Architecture** dengan layer:
-
-1. **Controllers**: Handle HTTP requests/responses
-2. **Services**: Business logic dan validasi
-3. **Repositories**: Database operations (abstraksi Prisma)
-4. **Routes**: API endpoint definitions
-5. **Middlewares**: Request processing (validation, error handling, rate limiting)
-
-## Setup & Installation
-
-### 1. Setup Database
-
-Gunakan PostgreSQL (lokal atau cloud seperti Neon):
-
-```bash
-# Install PostgreSQL atau gunakan cloud provider
-# Neon.tech (recommended): https://neon.tech
-# Supabase: https://supabase.com
-```
-
-### 2. Setup Backend
-
-```bash
-cd be
-
-# Install dependencies
-npm install
-
-# Setup environment variables
-copy .env.example .env
-# Edit .env dengan database URL Anda
-
-# Generate Prisma Client
-npm run prisma:generate
-
-# Push schema to database
-npm run prisma:push
-
-# Run development server
-npm run dev
-```
-
-Backend akan berjalan di `http://localhost:4000`
-
-### 3. Setup Frontend
-
-```bash
-cd fe
-
-# Install dependencies
-npm install
-
-# Setup environment variables
-copy .env.example .env
-# Edit .env dengan backend URL
-
-# Run development server
-npm run dev
-```
-
-Frontend akan berjalan di `http://localhost:3000`
-
-## API Endpoints
-
-### Contact Endpoints
-- `POST /api/contact` - Submit contact form
-- `GET /api/contact` - Get all contacts (admin)
-- `GET /api/contact/:id` - Get contact by ID
-- `DELETE /api/contact/:id` - Delete contact
-- `GET /api/contact/stats/count` - Get contact count
-
-### Analytics Endpoints
-- `POST /api/analytics` - Track visitor
-- `GET /api/analytics` - Get analytics summary
-- `GET /api/analytics/visitors` - Get all visitors (admin)
-- `DELETE /api/analytics/cleanup` - Clean old data
-
-### Health Check
-- `GET /api/health` - Server health check
-
-## Environment Variables
-
-### Backend (.env)
-```env
-NODE_ENV=development
-PORT=4000
-FRONTEND_URL=http://localhost:3000
-DATABASE_URL=postgresql://...
-```
-
-### Frontend (.env)
-```env
-NEXT_PUBLIC_API_URL=http://localhost:4000/api
-```
-
-## Development Scripts
-
-### Backend
-```bash
-npm run dev          # Run development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run prisma:studio # Open Prisma Studio
-```
-
-### Frontend
-```bash
-npm run dev          # Run development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-```
-
-## Deployment
-
-### Backend
-Deploy ke:
-- **Railway**: Auto-deploy with PostgreSQL
-- **Render**: Free tier available
-- **Heroku**: With Heroku Postgres
-
-### Frontend
-Deploy ke:
-- **Vercel**: Recommended (Next.js creator)
-- **Netlify**: Good alternative
-- **Railway**: Full-stack deployment
-
-## Features
-
-### Frontend
-- ✅ Modular component structure
-- ✅ Dark/Light mode toggle
-- ✅ Smooth animations
-- ✅ Responsive design
-- ✅ Type-safe API calls
-- ✅ SEO optimized
-
-### Backend
-- ✅ Clean Architecture
-- ✅ Type-safe with TypeScript
-- ✅ Request validation
-- ✅ Rate limiting
-- ✅ Error handling
-- ✅ CORS configured
-- ✅ Security headers (Helmet)
-- ✅ Database abstraction (Repository pattern)
-
-## Security Features
-
-- Input validation
-- Rate limiting (5 requests per 15 minutes for contact form)
-- CORS configuration
-- Helmet security headers
-- SQL injection protection (Prisma)
-- XSS protection
-
-## License
-
-MIT
-
-## Author
-
-Daffa Hardhan
-- Email: dapahardan@gmail.com
-- LinkedIn: [linkedin.com/in/daffa-hardhan](https://www.linkedin.com/in/daffa-hardhan)
-- GitHub: [github.com/DHard4114](https://github.com/DHard4114)
+    │   ├── controllers/        # Request Handlers
+    │   ├── services/           # Business Logic
+    │   ├── repositories/       # Database Access Layer
+    │   ├── routes/             # Endpoint Definitions
+    │   ├── middlewares/        # Validation & Security
+    │   └── config/             # OpenAPI & Env Config
+    └── prisma/                 # Database Schema
