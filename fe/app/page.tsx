@@ -14,6 +14,7 @@ import NavBar from '../components/NavBar'
 import HeroSection from '../components/HeroSection'
 import ProjectsSection from '../components/ProjectsSection'
 import ExperienceSection from '../components/ExperienceSection'
+import EducationSection from '../components/EducationSection'
 import SkillsSection from '../components/SkillsSection'
 import FeedSection from '../components/FeedSection'
 import ContactSection from '../components/ContactSection'
@@ -74,6 +75,10 @@ export default function Home() {
           
           <motion.div variants={fadeInUp} id="experience" className="scroll-mt-32">
             <ExperienceSection />
+          </motion.div>
+
+          <motion.div variants={fadeInUp} id="education" className="scroll-mt-32 border-t border-neutral-800/50 pt-16">
+            <EducationSection />
           </motion.div>
 
           <motion.div variants={fadeInUp} id="skills" className="scroll-mt-32 border-t border-neutral-800/50 pt-16">

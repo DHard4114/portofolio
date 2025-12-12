@@ -1,102 +1,227 @@
 /**
  * @file components/Footer.tsx
- * @description Professional footer for portfolio
+ * @description Ultra-enhanced footer with glitch effects, marquee, and ambient motion.
  * @module Components/Footer
- *
- * Contains identity, navigation, and contact links for the portfolio site.
- *
  * @author Daffa Hardhan
  * @created 2025
  */
+"use client"
 import Link from "next/link"
+import { motion, Variants } from "framer-motion"
+import { useState, useEffect } from "react"
+
+// --- CONSTANTS ---
+const TECH_STACK = [
+  "NEXT.JS 15", "REACT", "TYPESCRIPT", "TAILWIND CSS", "FRAMER MOTION", 
+  "VERCEL", "POSTGRESQL", "PRISMA", "NODE.JS", "THREE.JS", "WEBGL"
+]
+
+// --- ANIMATION VARIANTS (Typed Correctly) ---
+const fadeInUp: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+        opacity: 1, 
+        y: 0, 
+        transition: { duration: 0.6, ease: "easeOut" } 
+    }
+}
+
+const staggerContainer: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.1,
+            delayChildren: 0.2
+        }
+    }
+}
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-black border-t border-neutral-900 text-neutral-400 py-16 mt-20 font-sans">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+    <footer className="relative bg-black pt-20 pb-10 overflow-hidden font-sans border-t border-white/5">
+      
+      {/* 1. AMBIENT BACKGROUND FX */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* Grid Pattern - FIXED: Canonical Class */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808005_1px,transparent_1px),linear-gradient(to_bottom,#80808005_1px,transparent_1px)] bg-size-[40px_40px]"></div>
         
-        {/* Top Section: Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 mb-16">
+        {/* Moving Glow Orbs */}
+        <motion.div 
+          animate={{ x: [0, 100, 0], opacity: [0.1, 0.3, 0.1] }} 
+          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+          className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-900/20 blur-[120px] rounded-full"
+        />
+        <motion.div 
+          animate={{ x: [0, -100, 0], opacity: [0.1, 0.2, 0.1] }} 
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-900/20 blur-[100px] rounded-full"
+        />
+        
+        {/* Animated Top Border (Scanline) */}
+        <div className="absolute top-0 left-0 w-full h-px bg-neutral-900 overflow-hidden">
+            <motion.div 
+                animate={{ x: ["-100%", "100%"] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                className="w-1/2 h-full bg-linear-to-r from-transparent via-emerald-500/50 to-transparent"
+            />
+        </div>
+      </div>
+
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+        
+        {/* 2. MAIN GRID CONTENT */}
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20"
+        >
           
-          {/* Column 1: Identity & Bio (Spans 5 cols) */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* BRAND COL */}
+          <motion.div variants={fadeInUp} className="md:col-span-2 space-y-6">
             <div>
-              <h3 className="text-2xl font-bold text-white tracking-tight mb-1">Daffa Hardhan</h3>
-              <p className="text-neutral-500 text-sm">Computer Engineering Undergraduate</p>
+              <h3 className="text-4xl font-bold text-white tracking-tighter font-serif">
+                Daffa <span className="text-neutral-600 italic">Hardhan.</span>
+              </h3>
+              <p className="text-xs font-mono text-neutral-500 mt-2 tracking-widest">
+                ENGINEERING & CREATIVE ARCHITECTURE
+              </p>
             </div>
             
-            <p className="text-neutral-400 leading-relaxed max-w-sm">
-              Developing robust digital systems and embedded solutions. 
-              Bridging the gap between hardware and software with precision.
-            </p>
+            <StatusBadge />
+          </motion.div>
 
-            <div className="flex items-center gap-2 text-sm text-neutral-300 pt-2">
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-200opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-300"></span>
-              </span>
-              <span>Available for new opportunities</span>
-            </div>
-          </div>
-
-          {/* Spacer Column */}
-          <div className="hidden lg:block lg:col-span-2"></div>
-
-          {/* Column 2: Navigation (Spans 2 cols) */}
-          <div className="lg:col-span-2">
-            <h4 className="text-sm font-bold text-white uppercase tracking-widest mb-6">Sitemap</h4>
-            <ul className="space-y-4 text-sm">
-              <li><Link href="/" className="hover:text-white transition-colors duration-200" />Home</li>
-              <li><Link href="/#projects" className="hover:text-white transition-colors duration-200"/>Projects</li>
-              {/* Tambahkan Link Dashboard disini */}
-              <li><Link href="/dashboard" className="hover:text-emerald-400 transition-colors duration-200 flex items-center gap-2" />
-                  Analytics
-                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-              </li>
-              <li><Link href="/#contact" className="hover:text-white transition-colors duration-200" />Contact</li>
+          {/* NAV COL [01] */}
+          <motion.div variants={fadeInUp}>
+            <h4 className="text-[10px] font-bold text-emerald-500/80 uppercase tracking-[0.2em] mb-6 font-mono border-b border-emerald-900/30 pb-2 w-fit">
+              [01] SYSTEM NAV
+            </h4>
+            <ul className="space-y-2">
+              <ScrambleLink href="/" label="HOME MODULE" />
+              <ScrambleLink href="/#projects" label="PROJECT ARCHIVE" />
+              <ScrambleLink href="/dashboard" label="ANALYTICS CONSOLE" highlight />
+              <ScrambleLink href="/#contact" label="TRANSMISSION" />
             </ul>
-          </div>
+          </motion.div>
 
-          {/* Column 3: Connect (Spans 3 cols) */}
-          <div className="lg:col-span-3">
-            <h4 className="text-sm font-bold text-white uppercase tracking-widest mb-6">Connect</h4>
-            <ul className="space-y-4 text-sm">
-              <li>
-                <a href="mailto:dapahardan@gmail.com" className="flex items-center gap-3 hover:text-white transition-colors group">
-                  <svg className="w-4 h-4 text-neutral-600 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                  dapahardan@gmail.com
-                </a>
-              </li>
-              <li>
-                <a href="https://linkedin.com/in/daffa-hardhan" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors group">
-                  <svg className="w-4 h-4 text-neutral-600 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                  LinkedIn
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/DHard4114" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors group">
-                  <svg className="w-4 h-4 text-neutral-600 group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                  GitHub
-                </a>
-              </li>
+          {/* NAV COL [02] */}
+          <motion.div variants={fadeInUp}>
+            <h4 className="text-[10px] font-bold text-blue-500/80 uppercase tracking-[0.2em] mb-6 font-mono border-b border-blue-900/30 pb-2 w-fit">
+              [02] EXTERNAL LINKS
+            </h4>
+            <ul className="space-y-2">
+              <ScrambleLink href="mailto:dapahardan@gmail.com" label="MAIL SYSTEM" external />
+              <ScrambleLink href="https://linkedin.com/in/daffa-hardhan" label="LINKEDIN PROFILER" external />
+              <ScrambleLink href="https://github.com/DHard4114" label="GITHUB REPO" external />
+              <ScrambleLink href="https://instagram.com/daffahardhan" label="INSTAGRAM FEED" external />
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Bottom Section: Copyright & Location */}
-        <div className="pt-8 border-t border-neutral-900 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-neutral-600">
-          <div className="flex items-center gap-2">
-            <span>© {currentYear} Daffa Hardhan. All rights reserved.</span>
+        {/* 3. BOTTOM BAR WITH MARQUEE */}
+        <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="pt-8 border-t border-neutral-900 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-mono text-neutral-600 uppercase tracking-wider relative overflow-hidden"
+        >
+          
+          <div className="flex items-center gap-4 z-10 bg-black pr-4">
+            <span>© {currentYear} DH. INC.</span>
+            <span className="hidden md:inline text-neutral-800">|</span>
+            <span>WEST JAVA, ID</span>
           </div>
-          <div className="flex items-center gap-2">
-            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-            <span>Serang, Banten, Indonesia</span>
+
+          {/* Infinite Marquee for Tech Stack */}
+          <div className="absolute left-0 md:left-auto md:right-0 w-full md:w-1/2 overflow-hidden mask-fade-sides">
+             <motion.div 
+               animate={{ x: ["0%", "-50%"] }}
+               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+               className="flex whitespace-nowrap gap-8"
+             >
+                {/* Duplicated content for seamless loop */}
+                {[...TECH_STACK, ...TECH_STACK].map((tech, i) => (
+                    <span key={i} className="flex items-center gap-2 text-neutral-700">
+                        <span className="w-1 h-1 bg-neutral-800 rounded-full"></span>
+                        {tech}
+                    </span>
+                ))}
+             </motion.div>
           </div>
-        </div>
+
+        </motion.div>
         
       </div>
     </footer>
   )
+}
+
+// --- SUB COMPONENTS ---
+
+// 1. Scramble Text Link Component
+function ScrambleLink({ href, label, external = false, highlight = false }: { href: string, label: string, external?: boolean, highlight?: boolean }) {
+  const [displayText, setDisplayText] = useState(label)
+  
+  // Scramble Effect Logic
+  useEffect(() => {
+    // Reset text when label changes (cleanup)
+    setDisplayText(label);
+  }, [label]);
+
+  const scramble = () => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*"
+    let iteration = 0
+    
+    const interval = setInterval(() => {
+      // FIX: Removed unused 'prev' argument
+      setDisplayText(() => 
+        label.split("").map((letter, index) => {
+          if (index < iteration) return label[index]
+          return chars[Math.floor(Math.random() * chars.length)]
+        }).join("")
+      )
+      
+      if (iteration >= label.length) clearInterval(interval)
+      iteration += 1 / 2 // Speed of decryption
+    }, 30)
+  }
+
+  return (
+    <li>
+      <Link 
+        href={href} 
+        target={external ? "_blank" : "_self"}
+        onMouseEnter={scramble}
+        className={`group flex items-center gap-3 text-xs font-medium transition-all duration-300 ${highlight ? 'text-emerald-400' : 'text-neutral-400 hover:text-white'}`}
+      >
+        <span className={`w-1.5 h-1.5 rounded-sm transition-all duration-300 ${highlight ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' : 'bg-neutral-800 group-hover:bg-white'}`}></span>
+        <span className="font-mono tracking-tight">{displayText}</span>
+        {external && (
+            <svg className="w-2.5 h-2.5 opacity-0 group-hover:opacity-100 transition-opacity -translate-x-2 group-hover:translate-x-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+        )}
+      </Link>
+    </li>
+  )
+}
+
+// 2. Animated Status Badge
+function StatusBadge() {
+    return (
+        <div className="inline-flex items-center gap-3 px-4 py-2 border border-neutral-800 bg-neutral-900/30 backdrop-blur-sm rounded-full group cursor-default hover:border-emerald-500/30 transition-colors">
+            <span className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-white uppercase tracking-widest leading-none">All Systems Normal</span>
+                <span className="text-[8px] font-mono text-neutral-500 mt-0.5 group-hover:text-emerald-500 transition-colors">UPTIME: 99.9%</span>
+            </div>
+        </div>
+    )
 }
