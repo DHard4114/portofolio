@@ -11,66 +11,32 @@
  * @created 2025
  */
 
-import express, { Application, Request, Response } from 'express'
-import cors from 'cors'
-import helmet from 'helmet'
-import morgan from 'morgan'
-import dotenv from 'dotenv'
-let apiReference: typeof import('@scalar/express-api-reference').apiReference | undefined = undefined;
 
-if (process.env.NODE_ENV !== 'production') {
-  // Only import Scalar API Reference in non-production (dev/local)
-  // This avoids ESM import error on Vercel
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  apiReference = require('@scalar/express-api-reference').apiReference;
-}
+import express from 'express'
 import routes from './routes'
 import { errorHandler, notFoundHandler } from './middlewares/error.middleware'
 import config from './config'
 import { createLogger } from './utils/logger'
-import { openApiSpec } from './config/openapi'
 
-// Load environment variables
-dotenv.config()
+// Tidak perlu dotenv.config() di Vercel, sudah otomatis
 
-// Create logger
 const logger = createLogger('Server')
-
-// Create Express app
-const app: Application = express()
+const app = express()
 const PORT = config.port
 
 // Middleware
-app.use(helmet({
-  contentSecurityPolicy: false, // Disable CSP for API documentation to work
-  crossOriginEmbedderPolicy: false,
-}))
-app.use(cors({
-  origin: config.corsOrigin,
-  credentials: true,
-}))
-app.use(express.json()) // Parse JSON bodies
-app.use(express.urlencoded({ extended: true })) // Parse URL-encoded bodies
-app.use(morgan(config.isProduction ? 'combined' : 'dev')) // Logging
+// (Jika ingin pakai helmet/cors/morgan, import dan aktifkan lagi di sini)
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 // API routes
 app.use('/api', routes)
 
-// API Documentation
-if (apiReference) {
-  app.use(
-    '/docs',
-    apiReference({
-      theme: 'default',
-      spec: {
-        content: openApiSpec,
-      },
-    })
-  );
-}
+// API Documentation (Scalar) di-nonaktifkan agar tidak error ESM di Vercel
+// Untuk dokumentasi API, jalankan Scalar secara lokal/dev saja.
 
 // Root endpoint
-app.get('/', (_req: Request, res: Response) => {
+app.get('/', (_req, res) => {
   res.json({
     success: true,
     message: 'Portfolio API Server - Daffa Hardhan',
