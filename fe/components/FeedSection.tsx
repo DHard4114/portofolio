@@ -29,14 +29,14 @@ const feeds = [
     description: "Secured 1st Place at the District level and 3rd Place at the Provincial level, demonstrating disciplined practice and artistic expression.",
     link: "#"
   },
-  {
-    title: "Netlab Research Assistant",
-    date: "Nov 2025",
-    category: "Career",
-    image: null, 
-    description: "Officially joined Netlab UI to research Advanced Computer Networking and AI implementation in digital systems.",
-    link: "#"
-  }
+  // {
+  //   title: "Netlab Research Assistant",
+  //   date: "Nov 2025",
+  //   category: "Career",
+  //   image: null, 
+  //   description: "Officially joined Netlab UI to research Advanced Computer Networking and AI implementation in digital systems.",
+  //   link: "#"
+  // }
 ]
 
 export default function FeedSection() {
