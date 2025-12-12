@@ -17,10 +17,51 @@ body {
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: hidden; /* Mencegah scroll horizontal tak terduga */
 }
 
-/* Hide Scrollbar for Cleaner UI on Mobile */
+/* --- 1. CURSOR LOGIC --- */
+/* Hide default cursor ONLY on devices with a fine pointer (Mouse/Trackpad) */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  
+  /* Pastikan elemen interaktif juga tidak memunculkan kursor default */
+  a, button, input, textarea, [role="button"], select {
+    cursor: none; 
+  }
+}
+
+/* --- 2. CUSTOM BROWSER SCROLLBAR --- */
+/* Chrome, Edge, Safari */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #262626; 
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981; /* Emerald-500 saat di-hover */
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #262626 #050505;
+}
+
+/* --- 3. UTILITIES --- */
+
+/* Hide Scrollbar (untuk elemen spesifik seperti card list mobile) */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -37,8 +78,27 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Selection */
+/* Mask Fade for Marquee (Digunakan di Footer) */
+.mask-fade-sides {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+/* --- 4. GLOBAL POLISH --- */
+
+/* Selection Color (Saat teks diblok) */
 ::selection {
-  background-color: rgba(16, 185, 129, 0.2);
+  background-color: rgba(16, 185, 129, 0.2); /* Emerald Tint */
   color: #10b981;
+}
+
+/* Autofill Fix: Mencegah background putih saat browser autofill form */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #050505 inset !important; /* Match background */
+  box-shadow: 0 0 0 1000px #050505 inset !important;
+  -webkit-text-fill-color: #ededed !important;
+  caret-color: #10b981 !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
