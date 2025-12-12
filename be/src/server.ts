@@ -16,7 +16,14 @@ import cors from 'cors'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
-import { apiReference } from '@scalar/express-api-reference'
+let apiReference: typeof import('@scalar/express-api-reference').apiReference | undefined = undefined;
+
+if (process.env.NODE_ENV !== 'production') {
+  // Only import Scalar API Reference in non-production (dev/local)
+  // This avoids ESM import error on Vercel
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  apiReference = require('@scalar/express-api-reference').apiReference;
+}
 import routes from './routes'
 import { errorHandler, notFoundHandler } from './middlewares/error.middleware'
 import config from './config'
@@ -50,15 +57,17 @@ app.use(morgan(config.isProduction ? 'combined' : 'dev')) // Logging
 app.use('/api', routes)
 
 // API Documentation
-app.use(
-  '/docs',
-  apiReference({
-    theme: 'default',
-    spec: {
-      content: openApiSpec,
-    },
-  })
-)
+if (apiReference) {
+  app.use(
+    '/docs',
+    apiReference({
+      theme: 'default',
+      spec: {
+        content: openApiSpec,
+      },
+    })
+  );
+}
 
 // Root endpoint
 app.get('/', (_req: Request, res: Response) => {
