@@ -12,27 +12,31 @@ import { motion } from 'framer-motion'
 const skillCategories = [
   {
     id: "01",
-    title: "CORE STACK",
-    desc: "Primary Development Environment",
-    skills: ["Next.js 15", "React", "TypeScript", "Node.js", "Tailwind", "Framer Motion"]
+    title: "LANGUAGES & CORE",
+    desc: "Polyglot Programming Foundation",
+    // Menggabungkan bahasa pemrograman dasar hingga tingkat lanjut
+    skills: ["JavaScript", "TypeScript", "C", "C++", "C#", "Java", ".NET", "Python", "Assembly"]
   },
   {
     id: "02",
-    title: "LOW LEVEL",
-    desc: "Hardware & Embedded Systems",
-    skills: ["C++", "Python", "ESP32", "Arduino", "FPGA (VHDL)", "FreeRTOS", "Assembly"]
+    title: "WEB & GAME ENGINE",
+    desc: "Frontend, Backend & Interactive 3D",
+    // Menggabungkan Web Stack Modern + Game Development (Unity)
+    skills: ["Next.js 15", "React", "Vite", "Node.js (Express)", "JWT Auth", "Socket.io", "Prisma ORM", "Unity 3D", "Tailwind"]
   },
   {
     id: "03",
-    title: "INFRASTRUCTURE",
-    desc: "Network, Cloud & DevOps",
-    skills: ["Docker", "PostgreSQL", "MongoDB", "Linux/Unix", "AWS (Basic)", "CI/CD"]
+    title: "DATA & INFRA",
+    desc: "Database, Cloud & DevOps Architecture",
+    // Menambahkan Neon, PostGIS, dll
+    skills: ["PostgreSQL", "PostGIS", "Neon DB", "MongoDB", "Docker", "Linux/Unix", "Git", "CI/CD"]
   },
   {
     id: "04",
-    title: "SECURITY & NET",
-    desc: "Cybersecurity Protocol",
-    skills: ["Kali Linux", "Wireshark", "Packet Tracer", "OWASP ZAP", "VLAN/OSPF", "Penetration Testing"]
+    title: "HARDWARE & SEC",
+    desc: "Embedded Systems & Cybersecurity",
+    // Fokus ke Hardware dan Security/Network
+    skills: ["ESP32", "Arduino", "FPGA (VHDL)", "FreeRTOS", "MQTT", "BLE", "LORA", "Kali Linux", "Wireshark", "Packet Tracer", "OWASP"]
   }
 ]
 

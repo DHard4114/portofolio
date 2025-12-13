@@ -13,57 +13,82 @@ import Image from 'next/image'
 
 // --- CONSTANTS ---
 const projects = [
-  {
-    title: "Robotic Arm Control System",
-    year: "2024",
-    category: "FPGA / Digital System",
-    description: "A robotic arm controller implemented in VHDL on FPGA, featuring autonomous 3D navigation, Euclidean distance calculation, and FSM-based control.",
-    tech: ["VHDL", "FPGA", "ModelSim", "Quartus"],
-    details: "Developed as the Final Project. The architecture uses the 'RobotArmFPGA' entity, integrating an asynchronous Input Decoder and a synchronous Navigator module for real-time Euclidean distance logic. Control is managed by a Finite State Machine (FSM).",
-    demoLink: "https://github.com/DHard4114/PA27_PSD",
-    imageURL: "/ArmRobot.jpg",
-  },
-  {
-    title: "SmartGuard: Predictive Maint.",
-    year: "2025",
-    category: "Industrial IoT",
-    description: "IoT system for real-time machine vibration monitoring and automatic safety shutdown using ESP32 and FreeRTOS.",
-    tech: ["ESP32", "MPU6050", "FreeRTOS", "Flask API"],
-    details: "Sensor node detects abnormal vibration, gateway triggers relay/buzzer, and logs incidents to cloud dashboard. Implements edge computing for immediate safety response.",
-    demoLink: "https://github.com/DHard4114/IOT22-SmartGuard-Industrial-Predictive-Maintenance-System",
-    imageURL: "/SmartGuard1.jpg",
-  },
-  {
-    title: "Multi-Campus Network Arch",
-    year: "2025",
-    category: "Network Engineering",
-    description: "Designed a scalable, redundant network for 3 campuses using Cisco 3-layer architecture (Core, Distribution, Access).",
-    tech: ["Cisco Packet Tracer", "VLAN", "OSPF", "STP"],
-    details: "Implemented VLANs, Inter-VLAN Routing, and Spanning Tree Protocol for segmentation, redundancy, and fast failover. Integrated core services (Web, DNS, Email).",
-    demoLink: "https://github.com/DHard4114/Multi-Campus-Enterprise-Network-Deployment",
-    imageURL: "/Topologi1.png",
-  },
-  {
-    title: "Penetration Testing & Fix",
-    year: "2025",
-    category: "Cybersecurity",
-    description: "Blackbox penetration testing and remediation of critical SQL Injection and IDOR flaws in a custom Node.js REST API.",
-    tech: ["Node.js", "PostgreSQL", "SQLi", "IDOR", "OWASP"],
-    details: "Identified and exploited a CRITICAL SQL Injection (Tautology Attack) and IDOR flaw. Remediation involved implementing Parameterized Queries and Object Level Authorization Checks.",
-    demoLink: "https://github.com/DHard4114/PenetrationTesting_InsecureDirectObjectReference",
-    imageURL: "/Pentest.png",
-  },
-  {
+    {
+        title: "EventFlow: Crowd Safety Ecosystem",
+        year: "2025",
+        category: "System Architect & Full-Stack",
+        description: "A collaborative crowd safety platform integrating real-time tracking and AI reporting. Led the engineering team and drove development across Backend and Web Dashboard interfaces.",
+        tech: ["Node.js", "React.js", "Socket.io", "PostgreSQL", "Mapbox", "System Design"],
+        details: "As **Project Lead**, I steered the architectural vision. Technically, I engineered the core Backend (REST API & WebSockets) for **<8s latency tracking**. I also **co-developed the Organizer Web Dashboard**, implementing critical modules like the real-time Mapbox visualization and incident monitoring UI, ensuring seamless data-to-visual synchronization.",
+        demoLink: "https://github.com/DHard4114/EventFlow",
+        imageURL: "/EventFlow.png",
+    },
+    {
+        title: "SmartGuard: Predictive Maint.",
+        year: "2025",
+        category: "Industrial IoT",
+        description: "IoT system for real-time machine vibration monitoring and automatic safety shutdown using ESP32 and FreeRTOS.",
+        tech: ["ESP32", "MPU6050", "FreeRTOS", "Flask API"],
+        details: "Sensor node detects abnormal vibration, gateway triggers relay/buzzer, and logs incidents to cloud dashboard. Implements **edge computing** for immediate safety response.",
+        demoLink: "https://github.com/DHard4114/IOT22-SmartGuard-Industrial-Predictive-Maintenance-System",
+        imageURL: "/SmartGuard1.jpg",
+    },
+    {
+        title: "Penetration Testing & Fix",
+        year: "2025",
+        category: "Cybersecurity",
+        description: "Blackbox penetration testing and remediation of critical SQL Injection and IDOR flaws in a custom Node.js REST API.",
+        tech: ["Node.js", "PostgreSQL", "SQLi", "IDOR", "OWASP"],
+        details: "Identified and exploited a **CRITICAL SQL Injection** (Tautology Attack) to bypass authentication and an **IDOR** flaw to access secret data via UUID enumeration. Remediation involved implementing **Parameterized Queries** to prevent SQLi and integrating **Object Level Authorization Checks** in the controller layer to mitigate IDOR, significantly raising the security posture.",
+        demoLink: "https://github.com/DHard4114/PenetrationTesting_InsecureDirectObjectReference",
+        imageURL: "/Pentest.png",
+    },
+    {
+        title: "Multi-Campus Network Arch",
+        year: "2025",
+        category: "Network Engineering",
+        description: "Designed a scalable, redundant network for 3 campuses using Cisco 3-layer architecture (Core, Distribution, Access).",
+        tech: ["Cisco Packet Tracer", "VLAN", "OSPF", "STP"],
+        details: "Implemented VLANs, Inter-VLAN Routing, and Spanning Tree Protocol for segmentation, redundancy, and fast failover. Integrated core services (Web, DNS, Email).",
+        demoLink: "https://github.com/DHard4114/Multi-Campus-Enterprise-Network-Deployment",
+        imageURL: "/Topologi1.png",
+    },
+    {
+        title: "Robotic Arm Control System",
+        year: "2024",
+        category: "FPGA / Digital System",
+        description: "A robotic arm controller implemented in VHDL on FPGA, featuring autonomous 3D navigation, Euclidean distance calculation, and FSM-based control.",
+        tech: ["VHDL", "FPGA", "ModelSim", "Quartus"],
+        details: "Developed as the Final Project. The architecture uses the **'RobotArmFPGA' entity**, integrating an asynchronous Input Decoder and a synchronous Navigator module for real-time Euclidean distance logic. Control is managed by a Finite State Machine (FSM).",
+        demoLink: "https://github.com/DHard4114/PA27_PSD",
+        imageURL: "/ArmRobot.jpg",
+    },
+    {
     title: "AimTention: FPS Trainer",
     year: "2024",
     category: "Game Development",
     description: "A dedicated 3D game trainer built on Unity to enhance player aiming, reflexes, and precision for FPS games.",
     tech: ["Unity 3D", "C#", "FPS Simulation", "Flick Mode"],
-    details: "Developed based on 'Realism and Relevance' design pillars. Features Normal Mode (gridshot) and Flick Mode (reflex training) with detailed post-match analytics.",
+    details: "Developed based on 'Realism and Relevance' design pillars. Features **Normal Mode** (gridshot) and **Flick Mode** (reflex training) with detailed post-match analytics.",
     demoLink: "https://github.com/Tinkermannn/Aim-Tention",
     imageURL: "/AimTention.png",
-  },
+    },
 ];
+
+// --- HELPER FUNCTION: PARSE BOLD TEXT ---
+// Memecah string berdasarkan tanda ** dan merender elemen <strong> berwarna putih
+const parseBoldText = (text: string) => {
+  if (!text) return "";
+  const parts = text.split('**');
+  return parts.map((part, index) => {
+    // Jika index ganjil, berarti teks berada di antara tanda **
+    if (index % 2 === 1) {
+      return <strong key={index} className="text-white font-bold font-sans">{part}</strong>;
+    }
+    // Jika genap, teks biasa
+    return part;
+  });
+};
 
 export default function ProjectsSection() {
   const [current, setCurrent] = useState(0);
@@ -105,7 +130,6 @@ export default function ProjectsSection() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6 border-b border-neutral-800 pb-6 relative">
            {/* Progress Line */}
            <motion.div 
-             // FIX: h-[2px] -> h-0.5 (Canonical)
              className="absolute bottom-0 left-0 h-0.5 bg-emerald-500 shadow-[0_0_10px_#10b981]"
              initial={{ width: "0%" }}
              animate={{ width: `${((current + 1) / projects.length) * 100}%` }}
@@ -188,7 +212,6 @@ function ProjectCard({ project, openModal }: { project: typeof projects[0], open
             onMouseMove={handleMouse}
             onMouseLeave={() => { x.set(0); y.set(0); }}
             onClick={openModal}
-            // FIX: lg:h-[550px] -> lg:h-137.5 (Canonical)
             className="grid grid-cols-1 lg:grid-cols-12 border border-neutral-800 bg-[#080808] overflow-hidden shadow-2xl cursor-none lg:h-137.5 relative group/card"
         >
             {/* Holographic Border Glow */}
@@ -208,7 +231,6 @@ function ProjectCard({ project, openModal }: { project: typeof projects[0], open
                 
                 {/* Visual Overlays */}
                 <div className="absolute inset-0 bg-linear-to-t from-[#080808] via-transparent to-transparent opacity-80"></div>
-                {/* FIX: bg-[size:4px_4px] -> bg-size-[4px_4px] (Canonical) */}
                 <div className="absolute inset-0 bg-size-[4px_4px] bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.5)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] pointer-events-none opacity-50"></div>
                 
                 {/* Floating "Open" Cursor (Only visible on hover) */}
@@ -296,11 +318,10 @@ function ProjectModal({ project, onClose }: { project: typeof projects[0], onClo
                 className="relative w-full max-w-5xl bg-[#090909] border border-neutral-800 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Decorative Top Bar: bg-linear-to-r (Canonical V4) */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-emerald-500 via-yellow-100 to-green-500 z-30"></div>
+                {/* Decorative Top Bar */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-emerald-500 via-blue-500 to-purple-500 z-30"></div>
 
                 {/* Left: Image (Scrollable on mobile) */}
-                {/* FIX: min-h-[300px] -> min-h-75 (Canonical) */}
                 <div className="w-full md:w-1/2 bg-black relative min-h-75 border-b md:border-b-0 md:border-r border-neutral-800 group">
                     {project.imageURL ? (
                         <Image src={project.imageURL} alt={project.title} fill className="object-contain p-8" />
@@ -328,7 +349,7 @@ function ProjectModal({ project, onClose }: { project: typeof projects[0], onClo
 
                     <div className="space-y-8 mt-4">
                         <div>
-                            <span className="text-emerald-500 font-mono text-xs uppercase tracking-widest mb-2 block">{project.category} / {project.year}</span>
+                            <span className="text-emerald-500 font-mono text-xs uppercase tracking-widest mb-2 block">{project.category} /{project.year}</span>
                             <h2 className="text-3xl lg:text-4xl font-bold text-white font-serif leading-tight">{project.title}</h2>
                         </div>
 
@@ -345,7 +366,10 @@ function ProjectModal({ project, onClose }: { project: typeof projects[0], onClo
                             <h4 className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest flex items-center gap-2">
                                 <span className="w-1 h-1 bg-blue-500 rounded-full"></span> Technical Detail
                             </h4>
-                            <p className="text-neutral-300 text-sm leading-relaxed text-justify">{project.details}</p>
+                            {/* INTEGRATED BOLD PARSING */}
+                            <p className="text-neutral-300 text-sm leading-relaxed text-justify">
+                                {parseBoldText(project.details)}
+                            </p>
                         </div>
 
                         <div className="space-y-4">
