@@ -122,7 +122,7 @@ export default function HeroSection() {
       <motion.div variants={itemVariants} className="flex gap-3 mb-10 overflow-x-auto no-scrollbar pb-2 md:pb-0">
         <SocialButton href="https://linkedin.com/in/daffa-hardhan" label="LinkedIn" />
         <SocialButton href="https://github.com/DHard4114" label="GitHub" />
-        <SocialButton href="https://instagram.com/daffahardhan" label="Instagram" />
+        <SocialButton href="https://www.instagram.com/dapahardan/" label="Instagram" />
       </motion.div>
 
     </motion.section>
