@@ -49,7 +49,7 @@ export default function EducationSection() {
         },
         { 
           label: "Non-Academic", 
-          desc: "1st Place Guitar Solo (District), 3rd Place Debate (Provincial)." 
+          desc: "1st Place Guitar Solo (District), 3rd Place Guitar Solo (Province)." 
         }
       ]
     }
