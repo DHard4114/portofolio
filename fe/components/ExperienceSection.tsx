@@ -5,8 +5,9 @@
  * @author Daffa Hardhan
  * @created 2025
  */
+
 "use client"
-import React from 'react'
+
 import { motion } from 'framer-motion'
 
 const experiences = [

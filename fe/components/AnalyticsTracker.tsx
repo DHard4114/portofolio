@@ -9,21 +9,22 @@
  * @created 2025
  */
 "use client"
-import { useEffect } from 'react'
-import { usePathname } from 'next/navigation' // Wajib pakai ini di Next.js App Router
+import { useEffect, useRef } from 'react'
+import { usePathname } from 'next/navigation'
 import { postAnalyticsVisit } from '../service/api'
 
 export default function AnalyticsTracker() {
-  const pathname = usePathname() // Mendeteksi perubahan URL
+  const pathname = usePathname()
+  // Gunakan ref untuk mencegah double-fire di React Strict Mode (Development)
+  const initialized = useRef(false)
 
   useEffect(() => {
-    // Pastikan pathname ada sebelum tracking
-    if (pathname) {
-      // Kirim data ke API
-      postAnalyticsVisit(pathname)
-        .catch(err => console.error("Analytics Error:", err))
+    if (!initialized.current) {
+        // Kirim data visit
+        postAnalyticsVisit(pathname).catch(err => console.error(err))
+        initialized.current = true
     }
-  }, [pathname]) // Dependency: Jalankan ulang setiap 'pathname' berubah
+  }, [pathname])
 
-  return null // Komponen ini tidak merender UI apa-apa
+  return null
 }
