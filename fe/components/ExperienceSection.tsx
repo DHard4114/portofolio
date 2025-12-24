@@ -11,6 +11,14 @@ import { motion } from 'framer-motion'
 
 const experiences = [
   {
+    company: "Netlab UI - Universitas Indonesia",
+    role: "Research Assistant - NLP Team 2",
+    period: "Nov 2025 - Present",
+    current: true,
+    location: "Depok, ID",
+    description: "Spearheading research on AI Safety and Automated Red Teaming for Open-Weights LLMs. Co-developed 'JAILBREAK-R1', a resource-efficient Reinforcement Learning framework utilizing GRPO and Unsloth to democratize safety audits on consumer-grade hardware.",
+  },
+  {
     company: "Ikatan Mahasiswa Elektro (IME FTUI)",
     role: "Secretary Expert Staff",
     period: "Mar 2025 - Dec 2025",

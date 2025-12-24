@@ -14,6 +14,17 @@ import Image from 'next/image'
 // --- CONSTANTS ---
 const publications = [
     {
+      title: "JAILBREAK-R1: Gemma 3 Red Teaming",
+      year: "Dec 2025",
+      category: "AI Safety / Reinforcement Learning",
+      status: "Conference Paper",
+      description: "Framework Red Teaming otomatis pertama yang memungkinkan pelatihan adversarial pada model Gemma 3 menggunakan hardware kelas konsumen (Tesla T4). Menggabungkan Unsloth 4-bit quantization dan algoritma GRPO untuk mengeliminasi kebutuhan memori Critic network yang masif.",
+      tech: ["Python", "PyTorch", "Unsloth", "GRPO", "TRL", "Gemma 3"],
+      details: "Penelitian ini menjembatani **Resource Gap** dalam audit keamanan AI. Kami memperkenalkan **JAILBREAK-R1**, sebuah pipeline yang mengintegrasikan **Unsloth (4-bit NF4)** dan **Group Relative Policy Optimization (GRPO)** untuk memangkas penggunaan VRAM hingga **50%**. \n\nMetodologi menggunakan **Three-Stage Curriculum**: \n1. **Cold Start** (Imitation Learning dengan <think> tags), \n2. **Warm-up Exploration** (Diversity Rewards), \n3. **Hardening** (Adversarial Training). \n\nHasil: Mencapai **82% Attack Success Rate (ASR)** dengan output bahasa alami (Low Perplexity), mengungguli metode GCG dan AutoDAN, serta valid dijalankan pada **Single GPU 15GB**.",
+      demoLink: "https://github.com/GanendrPratama/Jailbreak_Gemma_Research",
+      imageURL: "/JailbreakR1_Architecture.png",
+    },
+    {
     title: "Stabilitas Massa-Pegas-Damper (RK4)",
       year: "2025",
       category: "Numerical Analysis",
