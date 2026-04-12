@@ -76,7 +76,7 @@ const projects = [
     },
     {
     title: "Lab-Ku",
-    year: "2024",
+    year: "2026",
     category: "AI-Powered Learning Management System",
     description: "LMS cerdas yang memanfaatkan Gemini API untuk automasi pembuatan materi dan kuis, serta sistem autentikasi aman menggunakan OAuth.",
     tech: ["Next.js", "Gemini API", "Google OAuth", "Tailwind CSS", "Framer Motion"],
