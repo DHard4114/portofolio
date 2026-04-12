@@ -10,6 +10,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { AnimatePresence, motion, useMotionValue, useTransform } from 'framer-motion'
 import Image from 'next/image'
+import { title } from 'process';
 
 // --- CONSTANTS ---
 const projects = [
@@ -64,14 +65,24 @@ const projects = [
         imageURL: "/ArmRobot.jpg",
     },
     {
-    title: "AimTention: FPS Trainer",
+        title: "AimTention: FPS Trainer",
+        year: "2024",
+        category: "Game Development",
+        description: "A dedicated 3D game trainer built on Unity to enhance player aiming, reflexes, and precision for FPS games.",
+        tech: ["Unity 3D", "C#", "FPS Simulation", "Flick Mode"],
+        details: "Developed based on 'Realism and Relevance' design pillars. Features **Normal Mode** (gridshot) and **Flick Mode** (reflex training) with detailed post-match analytics.",
+        demoLink: "https://github.com/Tinkermannn/Aim-Tention",
+        imageURL: "/AimTention.png",
+    },
+    {
+    title: "Lab-Ku",
     year: "2024",
-    category: "Game Development",
-    description: "A dedicated 3D game trainer built on Unity to enhance player aiming, reflexes, and precision for FPS games.",
-    tech: ["Unity 3D", "C#", "FPS Simulation", "Flick Mode"],
-    details: "Developed based on 'Realism and Relevance' design pillars. Features **Normal Mode** (gridshot) and **Flick Mode** (reflex training) with detailed post-match analytics.",
-    demoLink: "https://github.com/Tinkermannn/Aim-Tention",
-    imageURL: "/AimTention.png",
+    category: "AI-Powered Learning Management System",
+    description: "LMS cerdas yang memanfaatkan Gemini API untuk automasi pembuatan materi dan kuis, serta sistem autentikasi aman menggunakan OAuth.",
+    tech: ["Next.js", "Gemini API", "Google OAuth", "Tailwind CSS", "Framer Motion"],
+    details: "Lab-Ku memaksimalkan efisiensi pengajar dengan **Integrasi Gemini AI** yang mampu men-generate modul ajar dan soal kuis secara instan dari input topik sederhana. Keamanan data pengguna dijamin melalui **OAuth**, memberikan proses login yang seamless dan aman bagi guru maupun siswa.",
+    demoLink: "https://lab-ku.vercel.app/",
+    imageURL: "/Lab-Ku.png",
     },
 ];
 
