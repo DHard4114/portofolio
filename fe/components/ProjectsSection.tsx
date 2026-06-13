@@ -24,6 +24,16 @@ const projects = [
         demoLink: "https://lab-ku.vercel.app/",
         imageURL: "/Lab-Ku.png",
     },
+    {   
+        title: "QuizLive: Private Cloud IaaS",
+        year: "2026",
+        category: "Cloud Infrastructure & DevOps",
+        description: "Implementasi Enterprise Private Cloud IaaS berbasis Apache CloudStack dan KVM hypervisor untuk menghosting platform kuis real-time terisolasi.",
+        tech: ["Apache CloudStack", "KVM", "Ubuntu Server", "PM2 Cluster", "Node.js", "Socket.IO"],
+        details: "Merancang infrastruktur **Enterprise-grade Private Cloud** dari nol menggunakan arsitektur KVM dan nested virtualization. Mengonfigurasi **Isolated Guest Network, Source NAT, dan Port Forwarding** melalui Virtual Router. Sistem ini secara aman menghosting *backend* kuis interaktif yang ditenagai oleh Node.js dan diorkestrasi menggunakan **PM2 Cluster Mode** untuk menjamin *high availability* dan *internal load balancing*.",
+        demoLink: "https://github.com/DHard4114/CloudStack-5", // Sesuaikan dengan link repo lu
+        imageURL: "/cloudstack.png", // Pastikan file gambar banner yang lu buat tadi ada di folder /public
+    },
     {
         title: "EventFlow: Crowd Safety Ecosystem",
         year: "2025",
