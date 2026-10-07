@@ -8,62 +8,23 @@
 "use client"
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useLanguage } from '@/context/LanguageContext'
+import { translations } from '@/data/translations'
 
 export default function EducationSection() {
-  const educationData = [
-    {
-      school: "Universitas Indonesia",
-      degree: "Bachelor of Computer Engineering",
-      gpa: null, 
-      period: "2023 - 2027",
-      status: "Expected",
-      location: "Depok, ID",
-      current: true,
-      highlights: [
-        { 
-          label: "Core Concentration", 
-          desc: "Embedded Systems, Hardware-Software Co-design, Industrial IoT." 
-        },
-        { 
-          label: "Key Coursework", 
-          desc: "Network Eng (CCNA), FPGA Design (VHDL), OS, Data Structures." 
-        },
-        { 
-          label: "Laboratory", 
-          desc: "Digital Systems & Embedded Networking Labs." 
-        }
-      ]
-    },
-    {
-      school: "SMAN 1 Cikande",
-      degree: "Mathematics & Natural Sciences",
-      gpa: "Top 3 Rank", 
-      period: "2020 - 2023",
-      status: "Graduated",
-      location: "Serang, ID",
-      current: false,
-      highlights: [
-        { 
-          label: "Academic", 
-          desc: "Quarterfinalist OKTAN ITB 2022 (National Chem), Math Olympiad." 
-        },
-        { 
-          label: "Non-Academic", 
-          desc: "1st Place Guitar Solo (District), 3rd Place Guitar Solo (Province)." 
-        }
-      ]
-    }
-  ]
+  const { language } = useLanguage()
+  const t = translations[language].education
+  const educationData = t.items
 
   return (
     <section className="w-full">
       {/* HEADER */}
       <div className="flex items-end justify-between mb-12 border-b border-neutral-900 pb-6">
         <div>
-            <h2 className="text-3xl font-bold text-white tracking-tight font-serif">Education Protocol</h2>
+            <h2 className="text-3xl font-bold text-white tracking-tight font-serif">{t.heading}</h2>
             <div className="flex items-center gap-2 mt-2">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                <span className="text-[10px] font-mono text-emerald-500 uppercase tracking-widest">Academic Database</span>
+                <span className="text-[10px] font-mono text-emerald-500 uppercase tracking-widest">{t.subBadge}</span>
             </div>
         </div>
       </div>

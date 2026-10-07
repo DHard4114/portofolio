@@ -16,8 +16,6 @@ import ProjectsSection from '../components/ProjectsSection'
 import ExperienceSection from '../components/ExperienceSection'
 import EducationSection from '../components/EducationSection'
 import SkillsSection from '../components/SkillsSection'
-import PublicationsSection from '../components/PublicationsSection'
-import FeedSection from '../components/FeedSection'
 import ContactSection from '../components/ContactSection'
 import Footer from '../components/Footer'
 import BackgroundFX from '../components/BackgroundFSX' // Import ini
@@ -60,11 +58,11 @@ export default function Home() {
         variants={staggerContainer}
         initial="hidden"
         animate="show"
-        className="pt-28 min-h-screen max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-12 xl:gap-20 px-6 lg:px-8"
+        className="pt-20 md:pt-24 pb-12 lg:pb-16 min-h-screen w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 grid grid-cols-1 lg:grid-cols-[300px_1fr] xl:grid-cols-[340px_1fr] 2xl:grid-cols-[380px_1fr] gap-8 lg:gap-12 xl:gap-16"
       >
         {/* SIDEBAR */}
-        <aside className="lg:relative">
-          <div className="lg:sticky lg:top-32 h-fit">
+        <aside className="lg:relative pb-8 lg:pb-12">
+          <div className="lg:sticky lg:top-24 h-fit">
             <motion.div variants={fadeInUp}>
               <HeroSection />
             </motion.div>
@@ -72,30 +70,22 @@ export default function Home() {
         </aside>
 
         {/* MAIN CONTENT */}
-        <div className="flex flex-col gap-24 pb-20 w-full overflow-hidden">
+        <div className="flex flex-col gap-24 pb-8 lg:pb-12 w-full overflow-hidden">
           
           <motion.div variants={fadeInUp} id="experience" className="scroll-mt-32">
             <ExperienceSection />
-          </motion.div>
-
-          <motion.div variants={fadeInUp} id="education" className="scroll-mt-32 border-t border-neutral-800/50 pt-16">
-            <EducationSection />
-          </motion.div>
-
-          <motion.div variants={fadeInUp} id="skills" className="scroll-mt-32 border-t border-neutral-800/50 pt-16">
-            <SkillsSection />
           </motion.div>
 
           <motion.div variants={fadeInUp} id="projects" className="scroll-mt-32 border-t border-neutral-800/50 pt-16">
             <ProjectsSection />
           </motion.div>
 
-          <motion.div variants={fadeInUp} id="publications" className="scroll-mt-32 border-t border-neutral-800/50 pt-16">
-            <PublicationsSection />
+          <motion.div variants={fadeInUp} id="skills" className="scroll-mt-32 border-t border-neutral-800/50 pt-16">
+            <SkillsSection />
           </motion.div>
-          
-          <motion.div variants={fadeInUp} id="feed" className="scroll-mt-32 border-t border-neutral-800/50 pt-16">
-            <FeedSection />
+
+          <motion.div variants={fadeInUp} id="education" className="scroll-mt-32 border-t border-neutral-800/50 pt-16">
+            <EducationSection />
           </motion.div>
           
           <motion.div variants={fadeInUp} id="contact" className="scroll-mt-32 border-t border-neutral-800/50 pt-16">

@@ -104,18 +104,6 @@ export default function CyberCursor() {
             <div className={`absolute w-full h-px bg-emerald-500/50 transition-opacity ${isHovered ? 'opacity-100' : 'opacity-0'}`}></div>
             <div className={`absolute h-full w-px bg-emerald-500/50 transition-opacity ${isHovered ? 'opacity-100' : 'opacity-0'}`}></div>
         </motion.div>
-
-        {/* Label Text */}
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ 
-              opacity: isHovered ? 1 : 0, 
-              x: isHovered ? 30 : 20 
-          }}
-          className="absolute top-1 left-2 bg-emerald-900/80 border border-emerald-500/30 text-emerald-100 text-[9px] font-mono px-2 py-0.5 rounded shadow-lg whitespace-nowrap"
-        >
-          LINK DETECTED
-        </motion.div>
       </motion.div>
     </>
   )

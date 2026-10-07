@@ -9,11 +9,13 @@
 import Link from "next/link"
 import { motion, Variants } from "framer-motion"
 import { useState, useEffect } from "react"
+import { useLanguage } from '@/context/LanguageContext'
+import { translations } from '@/data/translations'
 
 // --- CONSTANTS ---
 const TECH_STACK = [
-  "NEXT.JS 15", "REACT", "TYPESCRIPT", "TAILWIND CSS", "FRAMER MOTION", 
-  "VERCEL", "POSTGRESQL", "PRISMA", "NODE.JS", "THREE.JS", "WEBGL"
+  "NEXT.JS", "REACT", "TYPESCRIPT", "TAILWIND CSS", "FRAMER MOTION", 
+  "POSTGRESQL", "NODE.JS", "PYTHON", "C/C++", "EMBEDDED SYSTEMS", "IOT"
 ]
 
 // --- ANIMATION VARIANTS (Typed Correctly) ---
@@ -28,24 +30,26 @@ const fadeInUp: Variants = {
 
 const staggerContainer: Variants = {
     hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-            delayChildren: 0.2
-        }
-    }
+    visible: { 
+        opacity: 1, 
+        transition: { 
+            staggerChildren: 0.1, 
+            delayChildren: 0.2 
+        } 
+    } 
 }
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const { language } = useLanguage()
+  const t = translations[language].footer
 
   return (
-    <footer className="relative bg-black pt-20 pb-10 overflow-hidden font-sans border-t border-white/5">
+    <footer className="relative bg-black mt-8 lg:mt-14 pt-12 lg:pt-16 pb-12 overflow-hidden font-sans border-t border-white/10">
       
       {/* 1. AMBIENT BACKGROUND FX */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Grid Pattern - FIXED: Canonical Class */}
+        {/* Grid Pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808005_1px,transparent_1px),linear-gradient(to_bottom,#80808005_1px,transparent_1px)] bg-size-[40px_40px]"></div>
         
         {/* Moving Glow Orbs */}
@@ -60,7 +64,7 @@ export default function Footer() {
           className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-900/20 blur-[100px] rounded-full"
         />
         
-        {/* Animated Top Border (Scanline) */}
+        {/* Animated Top Border */}
         <div className="absolute top-0 left-0 w-full h-px bg-neutral-900 overflow-hidden">
             <motion.div 
                 animate={{ x: ["-100%", "100%"] }}
@@ -70,7 +74,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
         
         {/* 2. MAIN GRID CONTENT */}
         <motion.div 
@@ -88,36 +92,35 @@ export default function Footer() {
                 Daffa <span className="text-neutral-600 italic">Hardhan.</span>
               </h3>
               <p className="text-xs font-mono text-neutral-500 mt-2 tracking-widest">
-                ENGINEERING & CREATIVE ARCHITECTURE
+                {t.brandSub}
               </p>
             </div>
-            
-            <StatusBadge />
           </motion.div>
 
           {/* NAV COL [01] */}
           <motion.div variants={fadeInUp}>
             <h4 className="text-[10px] font-bold text-emerald-500/80 uppercase tracking-[0.2em] mb-6 font-mono border-b border-emerald-900/30 pb-2 w-fit">
-              [01] SYSTEM NAV
+              {t.navColTitle}
             </h4>
             <ul className="space-y-2">
-              <ScrambleLink href="/" label="HOME MODULE" />
-              <ScrambleLink href="/#projects" label="PROJECT ARCHIVE" />
-              <ScrambleLink href="/dashboard" label="ANALYTICS CONSOLE" highlight />
-              <ScrambleLink href="/#contact" label="TRANSMISSION" />
+              <ScrambleLink href="/" label={t.links.home} />
+              <ScrambleLink href="/#experience" label={t.links.experience} highlight />
+              <ScrambleLink href="/#projects" label={t.links.projects} />
+              <ScrambleLink href="/#skills" label={t.links.skills} />
+              <ScrambleLink href="/#contact" label={t.links.contact} />
             </ul>
           </motion.div>
 
           {/* NAV COL [02] */}
           <motion.div variants={fadeInUp}>
             <h4 className="text-[10px] font-bold text-blue-500/80 uppercase tracking-[0.2em] mb-6 font-mono border-b border-blue-900/30 pb-2 w-fit">
-              [02] EXTERNAL LINKS
+              {t.connectColTitle}
             </h4>
             <ul className="space-y-2">
-              <ScrambleLink href="mailto:dapahardan@gmail.com" label="MAIL SYSTEM" external />
-              <ScrambleLink href="https://linkedin.com/in/daffa-hardhan" label="LINKEDIN PROFILER" external />
-              <ScrambleLink href="https://github.com/DHard4114" label="GITHUB REPO" external />
-              <ScrambleLink href="https://instagram.com/daffahardhan" label="INSTAGRAM FEED" external />
+              <ScrambleLink href="mailto:dapahardan@gmail.com" label="EMAIL" external />
+              <ScrambleLink href="https://linkedin.com/in/daffa-hardhan" label="LINKEDIN" external />
+              <ScrambleLink href="https://github.com/DHard4114" label="GITHUB" external />
+              <ScrambleLink href="https://instagram.com/daffahardhan" label="INSTAGRAM" external />
             </ul>
           </motion.div>
         </motion.div>
@@ -131,10 +134,11 @@ export default function Footer() {
         >
           
           <div className="flex items-center gap-4 z-10 bg-black pr-4">
-            <span>© {currentYear} DH. INC.</span>
+            <span>© {currentYear} DAFFA HARDHAN</span>
             <span className="hidden md:inline text-neutral-800">|</span>
-            <span>WEST JAVA, ID</span>
+            <span>{t.locationBadge}</span>
           </div>
+
 
           {/* Infinite Marquee for Tech Stack */}
           <div className="absolute left-0 md:left-auto md:right-0 w-full md:w-1/2 overflow-hidden mask-fade-sides">
@@ -208,20 +212,4 @@ function ScrambleLink({ href, label, external = false, highlight = false }: { hr
       </Link>
     </li>
   )
-}
-
-// 2. Animated Status Badge
-function StatusBadge() {
-    return (
-        <div className="inline-flex items-center gap-3 px-4 py-2 border border-neutral-800 bg-neutral-900/30 backdrop-blur-sm rounded-full group cursor-default hover:border-emerald-500/30 transition-colors">
-            <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-            </span>
-            <div className="flex flex-col">
-                <span className="text-[10px] font-bold text-white uppercase tracking-widest leading-none">All Systems Normal</span>
-                <span className="text-[8px] font-mono text-neutral-500 mt-0.5 group-hover:text-emerald-500 transition-colors">UPTIME: 99.9%</span>
-            </div>
-        </div>
-    )
 }

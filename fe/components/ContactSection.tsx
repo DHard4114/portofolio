@@ -15,9 +15,13 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { postContact } from '@/service/api'
 // Import Types dari file types/api.ts yang baru
 import { CreateContactDTO, StatusState } from '@/types/api' 
-
+import { useLanguage } from '@/context/LanguageContext'
+import { translations } from '@/data/translations'
 
 export default function ContactSection() {
+  const { language } = useLanguage()
+  const t = translations[language].contact
+
   // Gunakan Tipe yang lebih aman
   const [form, setForm] = useState<CreateContactDTO>({ name: '', email: '', subject: '', message: '' });
   const [loading, setLoading] = useState(false);
@@ -32,22 +36,29 @@ export default function ContactSection() {
     setLoading(true)
     setStatus({ type: null, msg: null })
 
+    const mailtoUrl = `mailto:dapahardan@gmail.com?subject=${encodeURIComponent(
+      form.subject || 'Portfolio Inquiry'
+    )}&body=${encodeURIComponent(
+      `Name: ${form.name}\nEmail: ${form.email}\n\nMessage:\n${form.message}`
+    )}`
+
     try {
-      // postContact akan throw error jika validasi gagal atau network error
-      const res = await postContact(form)
-      
-      if (res.success) {
-        setStatus({ type: 'success', msg: res.message || 'Transmission Successful.' })
-        setForm({ name: '', email: '', subject: '', message: '' })
-      } else {
-        // Handle response non-sukses yang dikembalikan oleh API
-        const errorMsg = res.message || res.error || 'Transmission Failed due to server issue.';
-        setStatus({ type: 'error', msg: errorMsg });
+      if (process.env.NEXT_PUBLIC_API_BASE_URL) {
+        const res = await postContact(form)
+        if (res.success) {
+          setStatus({ type: 'success', msg: res.message || t.form.successApi })
+          setForm({ name: '', email: '', subject: '', message: '' })
+          setLoading(false)
+          return
+        }
       }
-    } catch (err) {
-      // Penanganan error network, validasi, atau server
-      const errorMessage = err instanceof Error ? err.message : 'Transmission Failed.';
-      setStatus({ type: 'error', msg: errorMessage })
+      window.location.href = mailtoUrl
+      setStatus({ type: 'success', msg: t.form.successMailto })
+      setForm({ name: '', email: '', subject: '', message: '' })
+    } catch {
+      window.location.href = mailtoUrl
+      setStatus({ type: 'success', msg: t.form.successMailto })
+      setForm({ name: '', email: '', subject: '', message: '' })
     } finally {
       setLoading(false)
     }
@@ -72,7 +83,6 @@ export default function ContactSection() {
         )}
         <label 
             htmlFor={id} 
-            // FIX KUNCI: Tambahkan peer-not-placeholder-shown:top-0 & text-xs agar label naik saat ada nilai (termasuk Autofill)
             className="absolute left-0 top-3 text-neutral-500 transition-all duration-300 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-focus:top-0 peer-focus:text-xs peer-focus:text-white peer-focus:font-bold peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs pointer-events-none uppercase tracking-wider text-xs"
         >
             {label}
@@ -81,7 +91,6 @@ export default function ContactSection() {
         <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-white transition-all duration-500 peer-focus:w-full"></div>
     </div>
   );
-
 
   return (
     <section className="w-full">
@@ -111,36 +120,31 @@ export default function ContactSection() {
         {/* Kolom Kiri: Info & Availability */}
         <div className="lg:col-span-1">
              <h2 className="text-4xl font-bold text-neutral-200 tracking-tight mb-4 font-serif leading-tight">
-                Let&apos;s Build Something <span className="text-white border-b-2 border-neutral-700 pb-1">Remarkable</span>.
+                {t.headingLine1} <span className="text-white border-b-2 border-neutral-700 pb-1">{t.headingLine2}</span>
              </h2>
              <p className="text-neutral-400 text-base leading-relaxed text-justify mb-8">
-                Passionate about tackling complex challenges in Embedded Systems, IoT, and Full-stack Development. Open to exploring opportunities that push technological boundaries.
+                {t.description}
              </p>
              
              <div className="mt-8 border-t border-neutral-900 pt-8">
-                <div className="text-xs font-bold text-neutral-500 uppercase mb-5 tracking-widest">Current Availability</div>
+                <div className="text-xs font-bold text-neutral-500 uppercase mb-5 tracking-widest">{t.availabilityTitle}</div>
                 <div className="flex flex-col gap-4">
-                    
-                    {/* Status 1: Internship (Highlight Hijau Halus) */}
-                    <div className="flex items-center gap-3 text-sm font-medium text-white group w-fit">
-                        <span className="relative flex h-2.5 w-2.5">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-20"></span>
-                            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                        </span>
-                        <span className="text-neutral-200 group-hover:text-white transition-colors">Seeking Full-time Internships</span>
-                    </div>
-
-                    {/* Status 2: Research (Monokrom) */}
-                    <div className="flex items-center gap-3 text-sm font-medium text-neutral-500 group w-fit">
-                           <div className="h-2 w-2 rounded-full border border-neutral-600 bg-neutral-800"></div>
-                           <span className="group-hover:text-neutral-300 transition-colors">Research Collaborations</span>
-                    </div>
-
-                    {/* Status 3: Freelance (Monokrom) */}
-                    <div className="flex items-center gap-3 text-sm font-medium text-neutral-500 group w-fit">
-                           <div className="h-2 w-2 rounded-full border border-neutral-600 bg-neutral-800"></div>
-                           <span className="group-hover:text-neutral-300 transition-colors">Freelance Projects</span>
-                    </div>
+                    {t.availabilities.map((item, idx) => (
+                      item.highlight ? (
+                        <div key={idx} className="flex items-center gap-3 text-sm font-medium text-white group w-fit">
+                            <span className="relative flex h-2.5 w-2.5">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-20"></span>
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                            </span>
+                            <span className="text-neutral-200 group-hover:text-white transition-colors">{item.label}</span>
+                        </div>
+                      ) : (
+                        <div key={idx} className="flex items-center gap-3 text-sm font-medium text-neutral-500 group w-fit">
+                            <div className="h-2 w-2 rounded-full border border-neutral-600 bg-neutral-800"></div>
+                            <span className="group-hover:text-neutral-300 transition-colors">{item.label}</span>
+                        </div>
+                      )
+                    ))}
                 </div>
              </div>
         </div>
@@ -148,25 +152,25 @@ export default function ContactSection() {
         {/* Kolom Kanan: Form yang ringkas menggunakan renderInput */}
         <form className="lg:col-span-2 space-y-8" onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {renderInput('name', 'Your Name', 'text')}
-                {renderInput('email', 'Email Address', 'email')}
+                {renderInput('name', t.form.nameLabel, 'text')}
+                {renderInput('email', t.form.emailLabel, 'email')}
             </div>
 
-            {renderInput('subject', 'Subject / Topic', 'text')}
-            {renderInput('message', 'Message Details', 'text', true)}
+            {renderInput('subject', t.form.subjectLabel, 'text')}
+            {renderInput('message', t.form.messageLabel, 'text', true)}
 
             {/* Submit Button & Status */}
             <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-6">
                 <motion.button
                     type="submit"
                     disabled={loading}
-                    // Tombol Putih dengan teks hitam (agar kontras di latar belakang gelap)
                     whileHover={{ scale: 1.02, backgroundColor: '#ffffff', color: '#000000' }}
                     whileTap={{ scale: 0.98 }}
-                    className="px-8 py-3 bg-white text-black font-bold text-xs uppercase tracking-widest rounded transition-all duration-300 disabled:opacity-50 w-full sm:w-auto hover:bg-neutral-200"
+                    className="px-8 py-3 bg-white text-black font-bold text-xs uppercase tracking-widest rounded transition-all duration-300 disabled:opacity-50 w-full sm:w-auto hover:bg-neutral-200 cursor-pointer"
                 >
-                    {loading ? 'SENDING...' : 'SEND MESSAGE'}
+                    {loading ? t.form.sendingBtn : t.form.submitBtn}
                 </motion.button>
+
                 
                 <AnimatePresence>
                     {status.msg && (

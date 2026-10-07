@@ -8,53 +8,28 @@
 "use client"
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-
-const skillCategories = [
-  {
-    id: "01",
-    title: "LANGUAGES & CORE",
-    desc: "Polyglot Programming Foundation",
-    // Menggabungkan bahasa pemrograman dasar hingga tingkat lanjut
-    skills: ["JavaScript", "TypeScript", "C", "C++", "C#", "Java", ".NET", "Python", "Assembly"]
-  },
-  {
-    id: "02",
-    title: "WEB & GAME ENGINE",
-    desc: "Frontend, Backend & Interactive 3D",
-    // Menggabungkan Web Stack Modern + Game Development (Unity)
-    skills: ["Next.js 15", "React", "Vite", "Node.js (Express)", "JWT Auth", "Socket.io", "Prisma ORM", "Unity 3D", "Tailwind"]
-  },
-  {
-    id: "03",
-    title: "DATA & INFRA",
-    desc: "Database, Cloud & DevOps Architecture",
-    // Menambahkan Neon, PostGIS, dll
-    skills: ["PostgreSQL", "PostGIS", "Neon DB", "MongoDB", "Docker", "Linux/Unix", "Git", "CI/CD"]
-  },
-  {
-    id: "04",
-    title: "HARDWARE & SEC",
-    desc: "Embedded Systems & Cybersecurity",
-    // Fokus ke Hardware dan Security/Network
-    skills: ["ESP32", "Arduino", "FPGA (VHDL)", "FreeRTOS", "MQTT", "BLE", "LORA", "Kali Linux", "Wireshark", "Packet Tracer", "OWASP"]
-  }
-]
+import { useLanguage } from '@/context/LanguageContext'
+import { translations, SkillCategoryData } from '@/data/translations'
 
 export default function SkillsSection() {
+  const { language } = useLanguage()
+  const t = translations[language].skills
+  const skillCategories = t.categories
+
   return (
     <section className="w-full">
       {/* HEADER */}
       <div className="flex items-end justify-between mb-12 border-b border-neutral-900 pb-6">
         <div>
-            <h2 className="text-3xl font-bold text-white tracking-tight font-serif">Technical Proficiency</h2>
+            <h2 className="text-3xl font-bold text-white tracking-tight font-serif">{t.heading}</h2>
             <div className="flex items-center gap-2 mt-2">
                 <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                <span className="text-[10px] font-mono text-emerald-500 uppercase tracking-widest">System Capabilities Loaded</span>
+                <span className="text-[10px] font-mono text-emerald-500 uppercase tracking-widest">{t.subBadge}</span>
             </div>
         </div>
         <div className="hidden md:block text-right">
-            <span className="text-[10px] font-mono text-neutral-600 block">MODULES: 04</span>
-            <span className="text-[10px] font-mono text-neutral-600 block">STATUS: OPTIMAL</span>
+            <span className="text-[10px] font-mono text-neutral-600 block">{t.domainCount}</span>
+            <span className="text-[10px] font-mono text-neutral-500 block">{t.domainSub}</span>
         </div>
       </div>
 
@@ -70,7 +45,8 @@ export default function SkillsSection() {
 
 // --- SUB COMPONENT ---
 
-function TechModule({ data }: { data: typeof skillCategories[0] }) {
+function TechModule({ data }: { data: SkillCategoryData }) {
+
     const [hovered, setHovered] = useState(false)
 
     return (

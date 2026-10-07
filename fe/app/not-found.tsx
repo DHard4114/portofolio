@@ -33,17 +33,10 @@ export default function NotFound() {
         <div className="pt-6">
             <Link href="/" className="inline-flex items-center gap-2 px-6 py-3 bg-red-900/20 border border-red-800/50 text-red-500 hover:bg-red-600 hover:text-white transition-all text-xs font-bold uppercase tracking-widest group">
                 <span className="w-2 h-2 bg-red-500 group-hover:bg-white transition-colors"></span>
-                Reboot System
+                Back to Home
             </Link>
         </div>
       </motion.div>
-
-      {/* Decorative Code */}
-      <div className="absolute bottom-10 left-10 text-[10px] text-red-900/50 font-mono hidden md:block">
-        <p>ERR_CONNECTION_REFUSED</p>
-        <p>Stack trace: 0x00045F3A</p>
-        <p>Memory dump: ...</p>
-      </div>
     </div>
   )
 }

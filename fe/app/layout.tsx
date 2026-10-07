@@ -67,10 +67,8 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${cormorant.variable} ${jetbrains.variable} antialiased bg-[#050505] text-neutral-200 font-sans selection:bg-emerald-500/30 selection:text-emerald-50 overflow-x-hidden`}
       >
         {/* 
-          ClientRoot menangani:
-          1. SystemBoot (Loading Screen)
-          2. CyberCursor (Custom Mouse)
-          3. AnalyticsTracker (Page Tracking)
+          ClientRoot:
+          - CyberCursor (Custom Mouse)
         */}
         <ClientRoot>
           {children}

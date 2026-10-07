@@ -112,7 +112,7 @@ export default function PublicationsSection() {
                     ))}
                  </div>
                  <span className="text-[10px] font-bold text-emerald-500 tracking-[0.2em] uppercase">
-                    Research Archive // {current + 1 < 10 ? `0${current + 1}` : current + 1}
+                    Publication // {current + 1 < 10 ? `0${current + 1}` : current + 1}
                  </span>
               </div>
               <h2 className="text-4xl font-bold text-white tracking-tight font-serif leading-none">
@@ -209,7 +209,7 @@ function PublicationCard({ pub, openModal }: { pub: typeof publications[0], open
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
                     <div className="bg-black/70 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full flex items-center gap-2">
                         <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                        <span className="text-[10px] font-bold text-white uppercase tracking-widest">Access Document</span>
+                        <span className="text-[10px] font-bold text-white uppercase tracking-widest">View Paper</span>
                     </div>
                 </div>
             </div>

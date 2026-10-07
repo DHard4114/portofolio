@@ -10,110 +10,28 @@
 import { useState, useEffect, useCallback } from 'react'
 import { AnimatePresence, motion, useMotionValue, useTransform } from 'framer-motion'
 import Image from 'next/image'
-import { title } from 'process';
-
-// --- CONSTANTS ---
-const projects = [
-    {   
-        title: "Lab-Ku",
-        year: "2026",
-        category: "AI-Powered Learning Management System",
-        description: "LMS cerdas yang memanfaatkan Gemini API untuk automasi pembuatan materi dan kuis, serta sistem autentikasi aman menggunakan OAuth.",
-        tech: ["Next.js", "Gemini API", "Google OAuth", "Tailwind CSS", "Framer Motion"],
-        details: "Lab-Ku memaksimalkan efisiensi pengajar dengan **Integrasi Gemini AI** yang mampu men-generate modul ajar dan soal kuis secara instan dari input topik sederhana. Keamanan data pengguna dijamin melalui **OAuth**, memberikan proses login yang seamless dan aman bagi guru maupun siswa.",
-        demoLink: "https://lab-ku.vercel.app/",
-        imageURL: "/Lab-Ku.png",
-    },
-    {   
-        title: "QuizLive: Private Cloud IaaS",
-        year: "2026",
-        category: "Cloud Infrastructure & DevOps",
-        description: "Implementasi Enterprise Private Cloud IaaS berbasis Apache CloudStack dan KVM hypervisor untuk menghosting platform kuis real-time terisolasi.",
-        tech: ["Apache CloudStack", "KVM", "Ubuntu Server", "PM2 Cluster", "Node.js", "Socket.IO"],
-        details: "Merancang infrastruktur **Enterprise-grade Private Cloud** dari nol menggunakan arsitektur KVM dan nested virtualization. Mengonfigurasi **Isolated Guest Network, Source NAT, dan Port Forwarding** melalui Virtual Router. Sistem ini secara aman menghosting *backend* kuis interaktif yang ditenagai oleh Node.js dan diorkestrasi menggunakan **PM2 Cluster Mode** untuk menjamin *high availability* dan *internal load balancing*.",
-        demoLink: "https://github.com/DHard4114/CloudStack-5", // Sesuaikan dengan link repo lu
-        imageURL: "/cloudstack.png", // Pastikan file gambar banner yang lu buat tadi ada di folder /public
-    },
-    {
-        title: "EventFlow: Crowd Safety Ecosystem",
-        year: "2025",
-        category: "System Architect & Full-Stack",
-        description: "A collaborative crowd safety platform integrating real-time tracking and AI reporting. Led the engineering team and drove development across Backend and Web Dashboard interfaces.",
-        tech: ["Node.js", "React.js", "Socket.io", "PostgreSQL", "Mapbox", "System Design"],
-        details: "As **Project Lead**, I steered the architectural vision. Technically, I engineered the core Backend (REST API & WebSockets) for **<8s latency tracking**. I also **co-developed the Organizer Web Dashboard**, implementing critical modules like the real-time Mapbox visualization and incident monitoring UI, ensuring seamless data-to-visual synchronization.",
-        demoLink: "https://github.com/DHard4114/EventFlow",
-        imageURL: "/EventFlow.png",
-    },
-    {
-        title: "SmartGuard: Predictive Maint.",
-        year: "2025",
-        category: "Industrial IoT",
-        description: "IoT system for real-time machine vibration monitoring and automatic safety shutdown using ESP32 and FreeRTOS.",
-        tech: ["ESP32", "MPU6050", "FreeRTOS", "Flask API"],
-        details: "Sensor node detects abnormal vibration, gateway triggers relay/buzzer, and logs incidents to cloud dashboard. Implements **edge computing** for immediate safety response.",
-        demoLink: "https://github.com/DHard4114/IOT22-SmartGuard-Industrial-Predictive-Maintenance-System",
-        imageURL: "/SmartGuard1.jpg",
-    },
-    {
-        title: "Penetration Testing & Fix",
-        year: "2025",
-        category: "Cybersecurity",
-        description: "Blackbox penetration testing and remediation of critical SQL Injection and IDOR flaws in a custom Node.js REST API.",
-        tech: ["Node.js", "PostgreSQL", "SQLi", "IDOR", "OWASP"],
-        details: "Identified and exploited a **CRITICAL SQL Injection** (Tautology Attack) to bypass authentication and an **IDOR** flaw to access secret data via UUID enumeration. Remediation involved implementing **Parameterized Queries** to prevent SQLi and integrating **Object Level Authorization Checks** in the controller layer to mitigate IDOR, significantly raising the security posture.",
-        demoLink: "https://github.com/DHard4114/PenetrationTesting_InsecureDirectObjectReference",
-        imageURL: "/Pentest.png",
-    },
-    {
-        title: "Multi-Campus Network Arch",
-        year: "2025",
-        category: "Network Engineering",
-        description: "Designed a scalable, redundant network for 3 campuses using Cisco 3-layer architecture (Core, Distribution, Access).",
-        tech: ["Cisco Packet Tracer", "VLAN", "OSPF", "STP"],
-        details: "Implemented VLANs, Inter-VLAN Routing, and Spanning Tree Protocol for segmentation, redundancy, and fast failover. Integrated core services (Web, DNS, Email).",
-        demoLink: "https://github.com/DHard4114/Multi-Campus-Enterprise-Network-Deployment",
-        imageURL: "/Topologi1.png",
-    },
-    {
-        title: "Robotic Arm Control System",
-        year: "2024",
-        category: "FPGA / Digital System",
-        description: "A robotic arm controller implemented in VHDL on FPGA, featuring autonomous 3D navigation, Euclidean distance calculation, and FSM-based control.",
-        tech: ["VHDL", "FPGA", "ModelSim", "Quartus"],
-        details: "Developed as the Final Project. The architecture uses the **'RobotArmFPGA' entity**, integrating an asynchronous Input Decoder and a synchronous Navigator module for real-time Euclidean distance logic. Control is managed by a Finite State Machine (FSM).",
-        demoLink: "https://github.com/DHard4114/PA27_PSD",
-        imageURL: "/ArmRobot.jpg",
-    },
-    {
-        title: "AimTention: FPS Trainer",
-        year: "2024",
-        category: "Game Development",
-        description: "A dedicated 3D game trainer built on Unity to enhance player aiming, reflexes, and precision for FPS games.",
-        tech: ["Unity 3D", "C#", "FPS Simulation", "Flick Mode"],
-        details: "Developed based on 'Realism and Relevance' design pillars. Features **Normal Mode** (gridshot) and **Flick Mode** (reflex training) with detailed post-match analytics.",
-        demoLink: "https://github.com/Tinkermannn/Aim-Tention",
-        imageURL: "/AimTention.png",
-    },
-];
+import { useLanguage } from '@/context/LanguageContext'
+import { translations, ProjectData } from '@/data/translations'
 
 // --- HELPER FUNCTION: PARSE BOLD TEXT ---
-// Memecah string berdasarkan tanda ** dan merender elemen <strong> berwarna putih
 const parseBoldText = (text: string) => {
   if (!text) return "";
   const parts = text.split('**');
   return parts.map((part, index) => {
-    // Jika index ganjil, berarti teks berada di antara tanda **
     if (index % 2 === 1) {
       return <strong key={index} className="text-white font-bold font-sans">{part}</strong>;
     }
-    // Jika genap, teks biasa
     return part;
   });
 };
 
 export default function ProjectsSection() {
+  const { language } = useLanguage();
+  const t = translations[language].projects;
+  const projects = t.items;
   const [current, setCurrent] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   // --- HANDLERS ---
   const handleNext = useCallback(() => {
@@ -165,18 +83,18 @@ export default function ProjectsSection() {
                     ))}
                  </div>
                  <span className="text-[10px] font-bold text-emerald-500 tracking-[0.2em] uppercase">
-                    System Archive // {current + 1 < 10 ? `0${current + 1}` : current + 1}
+                    {t.hudPrefix} {current + 1 < 10 ? `0${current + 1}` : current + 1}
                  </span>
               </div>
               <h2 className="text-4xl font-bold text-white tracking-tight font-serif leading-none">
-                Featured Projects
+                {t.sectionTitle}
               </h2>
            </div>
            
            {/* HUD CONTROLS */}
            <div className="flex items-center gap-4">
               <div className="text-[10px] font-mono text-neutral-600 hidden md:block">
-                 NAV_CONTROLS [← →]
+                 {t.navControls}
               </div>
               <div className="flex gap-1">
                   <NavButton onClick={handlePrev} icon="←" />
@@ -192,6 +110,11 @@ export default function ProjectsSection() {
                 key={current} 
                 project={p} 
                 openModal={openModal} 
+                labels={{
+                  viewProject: t.viewProject,
+                  coreTechnologies: t.coreTechnologies,
+                  viewDetails: t.viewDetails
+                }}
             />
           </AnimatePresence>
         </div>
@@ -201,7 +124,16 @@ export default function ProjectsSection() {
       {/* --- IMMERSIVE MODAL --- */}
       <AnimatePresence>
         {isModalOpen && (
-          <ProjectModal project={p} onClose={closeModal} />
+          <ProjectModal 
+            project={p} 
+            onClose={closeModal} 
+            labels={{
+              overview: t.modalOverview,
+              techDetail: t.modalTechDetail,
+              stack: t.modalStack,
+              viewCode: t.modalViewCode
+            }}
+          />
         )}
       </AnimatePresence>
     </>
@@ -211,7 +143,15 @@ export default function ProjectsSection() {
 // --- SUB COMPONENTS ---
 
 // 1. 3D Tilt Card Component
-function ProjectCard({ project, openModal }: { project: typeof projects[0], openModal: () => void }) {
+function ProjectCard({ 
+  project, 
+  openModal,
+  labels 
+}: { 
+  project: ProjectData, 
+  openModal: () => void,
+  labels: { viewProject: string, coreTechnologies: string, viewDetails: string }
+}) {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotateX = useTransform(y, [0, 100], [2, -2]); 
@@ -233,7 +173,7 @@ function ProjectCard({ project, openModal }: { project: typeof projects[0], open
             onMouseMove={handleMouse}
             onMouseLeave={() => { x.set(0); y.set(0); }}
             onClick={openModal}
-            className="grid grid-cols-1 lg:grid-cols-12 border border-neutral-800 bg-[#080808] overflow-hidden shadow-2xl cursor-none lg:h-137.5 relative group/card"
+            className="grid grid-cols-1 lg:grid-cols-12 border border-neutral-800 bg-[#080808] overflow-hidden shadow-2xl cursor-none lg:h-[550px] xl:h-[600px] relative group/card"
         >
             {/* Holographic Border Glow */}
             <div className="absolute inset-0 border border-transparent group-hover/card:border-emerald-500/20 transition-colors duration-500 pointer-events-none z-20"></div>
@@ -258,7 +198,7 @@ function ProjectCard({ project, openModal }: { project: typeof projects[0], open
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
                     <div className="bg-black/70 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full flex items-center gap-2">
                         <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
-                        <span className="text-[10px] font-bold text-white uppercase tracking-widest">Access Data</span>
+                        <span className="text-[10px] font-bold text-white uppercase tracking-widest">{labels.viewProject}</span>
                     </div>
                 </div>
             </div>
@@ -285,7 +225,7 @@ function ProjectCard({ project, openModal }: { project: typeof projects[0], open
                     </div>
 
                     <div className="space-y-3">
-                        <span className="text-[9px] font-mono text-neutral-500 uppercase tracking-widest block">Core Technologies</span>
+                        <span className="text-[9px] font-mono text-neutral-500 uppercase tracking-widest block">{labels.coreTechnologies}</span>
                         <div className="flex flex-wrap gap-2">
                             {project.tech.slice(0, 5).map((t, i) => (
                                 <span key={i} className="px-2 py-1 bg-neutral-900 border border-neutral-800 text-neutral-300 text-[10px] font-mono hover:border-emerald-500/50 hover:text-emerald-400 transition-colors cursor-default">
@@ -297,7 +237,7 @@ function ProjectCard({ project, openModal }: { project: typeof projects[0], open
                 </div>
 
                 <div className="relative z-10 pt-6 border-t border-neutral-900 flex items-center justify-between group/btn">
-                    <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest group-hover/card:text-white transition-colors">View Details</span>
+                    <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest group-hover/card:text-white transition-colors">{labels.viewDetails}</span>
                     <div className="w-8 h-8 flex items-center justify-center border border-neutral-800 bg-neutral-900 group-hover/card:bg-white group-hover/card:text-black transition-all rounded-full">
                         <svg className="w-3 h-3 transform -rotate-45 group-hover/card:rotate-0 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </div>
@@ -306,6 +246,7 @@ function ProjectCard({ project, openModal }: { project: typeof projects[0], open
         </motion.div>
     )
 }
+
 
 // 2. Nav Button Component
 function NavButton({ onClick, icon }: { onClick: () => void, icon: string }) {
@@ -317,7 +258,15 @@ function NavButton({ onClick, icon }: { onClick: () => void, icon: string }) {
 }
 
 // 3. Modal Component
-function ProjectModal({ project, onClose }: { project: typeof projects[0], onClose: () => void }) {
+function ProjectModal({ 
+  project, 
+  onClose,
+  labels 
+}: { 
+  project: ProjectData, 
+  onClose: () => void,
+  labels: { overview: string, techDetail: string, stack: string, viewCode: string }
+}) {
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -336,7 +285,7 @@ function ProjectModal({ project, onClose }: { project: typeof projects[0], onClo
                 animate={{ y: 0, opacity: 1, scale: 1 }}
                 exit={{ y: 50, opacity: 0, scale: 0.95 }}
                 transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                className="relative w-full max-w-5xl bg-[#090909] border border-neutral-800 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
+                className="relative w-full max-w-5xl xl:max-w-6xl bg-[#090909] border border-neutral-800 shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Decorative Top Bar */}
@@ -355,7 +304,7 @@ function ProjectModal({ project, onClose }: { project: typeof projects[0], onClo
                         <div className="absolute bottom-6 left-6 right-6">
                             <a href={project.demoLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full py-3 bg-white text-black font-bold uppercase tracking-widest text-xs hover:bg-emerald-400 transition-colors">
                                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
-                                View Source Code
+                                {labels.viewCode}
                             </a>
                         </div>
                     )}
@@ -378,14 +327,14 @@ function ProjectModal({ project, onClose }: { project: typeof projects[0], onClo
 
                         <div className="space-y-4">
                             <h4 className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest flex items-center gap-2">
-                                <span className="w-1 h-1 bg-emerald-500 rounded-full"></span> Overview
+                                <span className="w-1 h-1 bg-emerald-500 rounded-full"></span> {labels.overview}
                             </h4>
                             <p className="text-neutral-300 text-sm leading-relaxed text-justify">{project.description}</p>
                         </div>
 
                         <div className="space-y-4">
                             <h4 className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest flex items-center gap-2">
-                                <span className="w-1 h-1 bg-blue-500 rounded-full"></span> Technical Detail
+                                <span className="w-1 h-1 bg-blue-500 rounded-full"></span> {labels.techDetail}
                             </h4>
                             {/* INTEGRATED BOLD PARSING */}
                             <p className="text-neutral-300 text-sm leading-relaxed text-justify">
@@ -395,7 +344,7 @@ function ProjectModal({ project, onClose }: { project: typeof projects[0], onClo
 
                         <div className="space-y-4">
                             <h4 className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest flex items-center gap-2">
-                                <span className="w-1 h-1 bg-purple-500 rounded-full"></span> Stack
+                                <span className="w-1 h-1 bg-purple-500 rounded-full"></span> {labels.stack}
                             </h4>
                             <div className="flex flex-wrap gap-2">
                                 {project.tech.map((t, i) => (
@@ -410,4 +359,4 @@ function ProjectModal({ project, onClose }: { project: typeof projects[0], onClo
             </motion.div>
         </motion.div>
     )
-}
+}
